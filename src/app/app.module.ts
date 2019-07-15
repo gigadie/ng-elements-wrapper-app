@@ -1,18 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { EmptyComponent } from './components/empty/empty.component';
+import { HostedAppComponent } from './components/hosted-app/hosted-app.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    SettingsComponent,
+    EmptyComponent,
+    HostedAppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
   providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
