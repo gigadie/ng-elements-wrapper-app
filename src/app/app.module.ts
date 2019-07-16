@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { EmptyComponent } from './components/empty/empty.component';
 import { HostedAppComponent } from './components/hosted-app/hosted-app.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { HostedAppComponent } from './components/hosted-app/hosted-app.component
     LoginComponent,
     SettingsComponent,
     EmptyComponent,
-    HostedAppComponent
+    HostedAppComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

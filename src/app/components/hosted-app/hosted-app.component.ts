@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AppLoaderService } from '../../services/app-loader.service';  
 
@@ -10,7 +10,8 @@ import { AppLoaderService } from '../../services/app-loader.service';
   styleUrls: ['./hosted-app.component.scss']
 })
 export class HostedAppComponent implements OnInit {
-
+  
+  injecting: boolean;
   state = {
     id: 'asdsdas',
     aa: 3
@@ -19,6 +20,7 @@ export class HostedAppComponent implements OnInit {
   constructor(
     private elementRef: ElementRef,
   	private route: ActivatedRoute,
+    private router: Router,
   	private appLoader: AppLoaderService,
     private renderer: Renderer2
   ) { }
@@ -32,8 +34,10 @@ export class HostedAppComponent implements OnInit {
   }
 
   private init(appId: string) {
-    this.appLoader.loadApp(appId);
-    this.injectApp(appId);
+    this.appLoader
+        .loadApp(appId)
+        .then(_ => this.injectApp(appId))
+        .catch(_ => this.router.navigate(['/error']));
   }
 
   private injectApp(appId: string) {
@@ -43,6 +47,7 @@ export class HostedAppComponent implements OnInit {
       this.renderer.removeChild(this.elementRef.nativeElement, htmlEl);
     }
 
+    this.injecting = true;
     this.appLoader
       .getApp(appId)
       .subscribe(
@@ -52,8 +57,7 @@ export class HostedAppComponent implements OnInit {
           appHTML.setAttribute('state', JSON.stringify(this.state));
           appHTML.addEventListener('message', msg => this.handleMessage(msg));
           this.renderer.appendChild(this.elementRef.nativeElement, appHTML);
-          // this.apps[appId].injected = true;
-          // this.apps[appId].injecting = false;
+          this.injecting = false;
           console.log(`${appId} Injected`);
         });
   }
