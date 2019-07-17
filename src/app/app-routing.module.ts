@@ -13,8 +13,8 @@ const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
 	{ path: 'error', component: ErrorComponent },
 	// Apps routes
-	{ path: ':appId/:appSpecific', redirectTo: ':appId', pathMatch: 'full' },
-	{ path: ':appId', component: HostedAppComponent },
+	{ path: ':appRoute/:appSpecific', redirectTo: ':appRoute', pathMatch: 'full' },
+	{ path: ':appRoute', component: HostedAppComponent },
 	// Wildcard route
 	{ path: '**', component: EmptyComponent }
 ];

@@ -29,18 +29,18 @@ export class HostedAppComponent implements OnInit {
   	this.route.paramMap
   		.subscribe(
   			params => {
-  				this.init(params.get('appId'));
+  				this.init(params.get('appRoute'));
   			});
   }
 
-  private init(appId: string) {
+  private init(appRoute: string) {
     this.appLoader
-        .loadApp(appId)
-        .then(_ => this.injectApp(appId))
+        .loadApp(appRoute/*, this.renderer*/)
+        .then(_ => this.injectApp(appRoute))
         .catch(_ => this.router.navigate(['/error']));
   }
 
-  private injectApp(appId: string) {
+  private injectApp(appRoute: string) {
 
     const htmlEl = this.elementRef.nativeElement.querySelector(`[app-id]`);
     if (htmlEl) {
@@ -49,7 +49,7 @@ export class HostedAppComponent implements OnInit {
 
     this.injecting = true;
     this.appLoader
-      .getApp(appId)
+      .getApp(appRoute)
       .subscribe(
         app => {
           const appHTML = this.renderer.createElement(app.tag);
@@ -58,7 +58,7 @@ export class HostedAppComponent implements OnInit {
           appHTML.addEventListener('message', msg => this.handleMessage(msg));
           this.renderer.appendChild(this.elementRef.nativeElement, appHTML);
           this.injecting = false;
-          console.log(`${appId} Injected`);
+          console.log(`${app.id} Injected`);
         });
   }
 

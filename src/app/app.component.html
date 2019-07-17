@@ -3,8 +3,8 @@
   <div class="row">
     <div class="col-4 pt-2">
       <!-- MENU -->
-      <div *ngFor="let app of apps | keyvalue">
-        <button type="button" [routerLink]="[app.value.id]" class="btn btn-block btn-light mb-2">{{app.value.title}}</button><!-- (click)="loadApp(app.key)"  -->
+      <div *ngFor="let app of apps">
+        <button type="button" [routerLink]="[app.route]" class="btn btn-block btn-light mb-2">{{app.title}}, {{app.id}}</button><!-- (click)="loadApp(app.key)"  -->
       </div>
       <div>
         <button type="button" [routerLink]="['/settings']" class="btn btn-block btn-light mb-2">Settings</button>
